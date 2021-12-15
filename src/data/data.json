@@ -1,0 +1,122 @@
+[
+  {
+    "entity": "Boeuf",
+    "emissions": 36.43
+  },
+  {
+    "entity": "Crevette d'élevage",
+    "emissions": 26.08
+  },
+  {
+    "entity": "Aganeau & Mouton",
+    "emissions": 12.52
+  },
+  {
+    "entity": "Tomates",
+    "emissions": 11
+  },
+  {
+    "entity": "Chocolat noir",
+    "emissions": 9.02
+  },
+  {
+    "entity": "Poisson d'élevage",
+    "emissions": 7.61
+  },
+  {
+    "entity": "Fromage",
+    "emissions": 6.17
+  },
+  {
+    "entity": "Viande de volaille",
+    "emissions": 5.33
+  },
+  {
+    "entity": "Lait",
+    "emissions": 5.25
+  },
+  {
+    "entity": "Viande de porc",
+    "emissions": 5.15
+  },
+  {
+    "entity": "Oeufs",
+    "emissions": 3.24
+  },
+  {
+    "entity": "Fruit rouge & raisin",
+    "emissions": 2.68
+  },
+  {
+    "entity": "Bannane",
+    "emissions": 1.43
+  },
+  {
+    "entity": "Oignons & Poireaux",
+    "emissions": 1.35
+  },
+  {
+    "entity": "Agrumes",
+    "emissions": 1.215
+  },
+  {
+    "entity": "Riz",
+    "emissions": 1.20
+  },
+  {
+    "entity": "Tofu (soja)",
+    "emissions": 1.16
+  },
+  {
+    "entity": "Légumes racine",
+    "emissions": 1.16
+  },
+  {
+    "entity": "Sucre de canne",
+    "emissions": 0.91
+  },
+  {
+    "entity": "Pommes",
+    "emissions": 0.89
+  },
+  {
+    "entity": "Huile de palme",
+    "emissions": 0.82
+  },
+  {
+    "entity": "Pomme de terre",
+    "emissions": 0.62
+  },
+  {
+    "entity": "Huile d'olive",
+    "emissions": 0.61
+  },
+  {
+    "entity": "Blé & Seigle",
+    "emissions": 0.58
+  },
+  {
+    "entity": "Arachide",
+    "emissions": 0.55
+  },
+  {
+    "entity": "Sucre de betrave",
+    "emissions": 0.51
+  },
+  {
+    "entity": "Maïs",
+    "emissions": 0.37
+  },
+  {
+    "entity": "Pois",
+    "emissions": 0.28
+  },
+  {
+    "entity": "Orges",
+    "emissions": 0.23
+  },
+  {
+    "entity": "Noix",
+    "emissions": 0.06
+  }
+]
