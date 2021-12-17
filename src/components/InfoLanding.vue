@@ -31,14 +31,13 @@ export default {
   .info-container{
     border: solid 5px var(--dark-color);
     border-radius: 10px;
-    background-color: #fff;
+    background-color: var(--light-color);
     width: 40vw;
     z-index:0;
   }
   .info{
     color: var(--dark-color);
-    background: var(--light-color);
-    padding: 2%;
+    padding: 7%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -46,6 +45,9 @@ export default {
       font-size: 2em;
       padding-bottom: 2%;
       white-space: nowrap;
+    }
+    .main-info{
+      margin-bottom:-5%;
     }
     p.main-info{
       font-size: 1.2em;
@@ -58,6 +60,7 @@ export default {
     display:flex;
     flex:0;
     align-items: center;
+    flex-wrap:wrap;
   }
   .cta-main{;
     color:var(--dark-color);
@@ -68,7 +71,7 @@ export default {
     width:fit-content;
     border-radius: 10px;
     border: solid 3px;
-    padding: 2%;
+    padding: 2% 5%;
     font-size: 1.5em;
     font-weight: 500;
     white-space: nowrap;
@@ -87,13 +90,17 @@ export default {
     }
   }
   .cta-info{
+    .cta-main{
+      margin-top: 5%;
+    }
     .cta-sec{
+      margin-top: 5%;
       margin-left: 5%;
     }
   }
-  @media (max-device-width: 768px) {
+  @media only screen and (max-device-width: 768px) {
     .info-container{
-      width: 60vw;
+      width: 70vw;
     }
     .info{
       align-items: center;
@@ -107,7 +114,7 @@ export default {
       }
     }
   }
-  @media (max-device-width: 425px) {
+  @media only screen and (max-device-width: 430px) {
     .info-container{
       width: 80vw;
       font-size: .8em;

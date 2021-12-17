@@ -122,10 +122,7 @@
     }
   }
 }
-@media screen and (max-width : 425px) {
-  .about{
-    margin-left: 0;
-  }
+@media only screen and (max-width : 768px) {
   .items{
     .items-row{
       margin:0;
@@ -169,7 +166,11 @@ export default {
   name: 'About',
   data () {
     return {
-      scrollBars: 0
+      scrollBars: 0,
+      pos: {
+        x: 0,
+        y: 0
+      }
     }
   },
   methods: {
@@ -203,15 +204,41 @@ export default {
       // the scroll is contain in [ -maxHeight , 0 ]
       this.scrollBars = Math.max(-maxHeight, Math.min(0, this.scrollBars))
       items.style.transform = `translate3d(0,${this.scrollBars}px,0)`
+    },
+    touchStartHandler (e) {
+      this.pos.y = e.touches[0].clientY
+      document.addEventListener('touchmove', this.touchMoveHandler)
+      document.addEventListener('touchend', this.touchEndHandler)
+    },
+    touchMoveHandler (e) {
+      const dy = e.touches[0].clientY - this.pos.y
+      // Scroll the element
+      this.scrollBy(dy)
+      // resset the position of the finger
+      this.pos.y = e.touches[0].clientY
+    },
+    touchEndHandler (e) {
+      document.removeEventListener('touchmove', this.touchMoveHandler)
+      document.removeEventListener('touchend', this.touchEndHandler)
+    },
+    scrollBy (dy) {
+      this.scrollBars += dy
+      const items = document.getElementById('items')
+      const maxHeight = items.offsetHeight - window.innerHeight / 2
+      // the scroll is contain in [ -maxHeight , 0 ]
+      this.scrollBars = Math.max(-maxHeight, Math.min(0, this.scrollBars))
+      items.style.transform = `translate3d(0,${this.scrollBars}px,0)`
     }
   },
   mounted () {
     document.addEventListener('mousemove', this.animateItems)
     document.addEventListener('wheel', this.scroll)
+    document.addEventListener('touchstart', this.touchStartHandler)
   },
   unmounted () {
     document.removeEventListener('mousemove', this.animateItems)
     document.removeEventListener('wheel', this.scroll)
+    document.removeEventListener('touchstart', this.touchStartHandler)
   }
 }
 </script>

@@ -88,6 +88,7 @@
   // cursor: none;
   // --dark-color: #0D1317;
   --dark-color: #0f1020;
+  // --light-color: yellow;
   --light-color: #ecf8f8;
 }
 body{
@@ -112,7 +113,9 @@ body{
   flex-grow: 1;
   position: relative;
 }
-
+.clickable{
+  cursor:pointer;
+}
 .bolbs {
   width: 100vw;
   height: 100vh;

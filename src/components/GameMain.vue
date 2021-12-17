@@ -212,7 +212,8 @@ export default {
     align-items: center;
   .cta-main{
     font-size: 2em;
-    padding: 2% 5%;
+    padding: 10% 20%;
+    border-radius:10px;
   }
   .cta-sec{
     margin-top:3vh;
@@ -269,8 +270,13 @@ export default {
   .game-nav{
     width: 100%;
   }
+  .game-cta {
+    .cta-main{
+      padding: 2% 5%;
+    }
+  }
 }
-@media only screen and (max-width : 425px) {
+@media only screen and (max-width : 430px) {
   .game-main{
     font-size: .6em;
     .game-nav{

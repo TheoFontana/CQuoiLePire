@@ -13,7 +13,8 @@
   .card{
     color: var(--dark-color);
     aspect-ratio: 2/3;
-    width: 25vh;
+    width: 25vw;
+    // max-width: 35vw;
     border: solid 3px;
     border-radius: 10px;
     background: var(--light-color);
@@ -53,7 +54,7 @@
       }
     }
   }
-  @media only screen and (max-width : 425px) {
+  @media only screen and (max-width : 430px) {
     .card{
       width: 75vw;
       height: unset;

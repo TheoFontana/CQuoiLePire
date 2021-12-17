@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <transition  appear @enter="startAnimate">
+    <transition  :style="{ width: arrowSize.x } " appear @enter="startAnimate">
       <svg
         id="arrow"
         class="nav-arrow"
@@ -43,7 +43,7 @@
         fill="var(--light-color)"/>
       </svg>
     </transition>
-    <div class="thumbnail-wraper">
+    <div class="thumbnail-wraper clickable">
       <transition
         id="thumbnail"
         class="thumbnail"
@@ -71,8 +71,17 @@ export default {
   data () {
     return {
       copied: false,
-      showData: false
+      showData: false,
+      arrowSize:
+        {
+          x: null,
+          y: null
+        }
     }
+  },
+  mounted () {
+    this.setArrowSize()
+    document.addEventListener('resize', this.setArrowSize)
   },
   methods: {
     pageTransition () {
@@ -92,8 +101,16 @@ export default {
         this.$router.push(nextPage)
       }, 1000)
     },
+    setArrowSize () {
+      console.log('setsize')
+      if (document.innerWidth > 768) {
+        const nav = document.querySelector('#data')
+        const elementWidth = nav.clientWidth
+        this.arrowSize.x = 6 * elementWidth
+      }
+    },
     startAnimate () {
-      if (window.innerWidth > 768) {
+      if (document.innerWidth > 768) {
         const morphToLeft = KUTE.to(
           '#right-arrow',
           { path: '#left-arrow' },
@@ -230,6 +247,7 @@ export default {
     }
     .game-cta{
       .cta-main{
+        padding: 2% 5%;
         p{
           font-size: .8em;
         }
@@ -257,6 +275,11 @@ export default {
     margin-top:5vh;
     width: 80vw;
     max-height: 40vh;
+    .game-cta{
+      .cta-main{
+        padding: 2% 5%;
+      }
+    }
   }
   .thumbnail{
     width: 80vw;

@@ -85,6 +85,7 @@ export default {
     justify-content: space-between;
     color:var(--light-color);
     .title{
+      mix-blend-mode: difference;
       font-size: 2em;
       font-weight: 800;
     }
@@ -96,6 +97,7 @@ export default {
       text-decoration: none;
     }
     .pages{
+      mix-blend-mode: difference;
       display: flex;
       flex-grow: 1;
       justify-content: flex-end;

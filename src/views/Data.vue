@@ -160,24 +160,27 @@ export default {
       focusedItem: data[0],
       infoPosition: { x: 0, y: 0 },
       displayItemInfo: false,
-      scrollBars: 0
+      scrollBars: 0,
+      pos: {
+        x: 0,
+        y: 0
+      }
     }
   },
   mounted () {
-    document.addEventListener('wheel', this.scroll)
-    document.addEventListener('wheel', (e) => {
-      if (e.target.className !== 'graph-bar') {
-        this.displayInfo = false
-      } else {
-        this.displayInfo = true
-      }
-    })
+    document.addEventListener('wheel', this.scrollHozizontal)
+    document.addEventListener('touchstart', this.touchStartHandler)
+    // document.addEventListener('wheel', (e) => {
+    //   if (e.target.className !== 'graph-bar') {
+    //     this.displayInfo = false
+    //   } else {
+    //     this.displayInfo = true
+    //   }
+    // })
   },
-  // beforeUnmount () {
-  //   this.transitionOut()
-  // },
   unmounted () {
-    window.removeEventListener('wheel', this.scroll)
+    document.removeEventListener('wheel', this.scrollHozizontal)
+    document.removeEventListener('touchstart', this.touchStartHandler)
   },
   methods: {
     transitionIn () {
@@ -259,14 +262,39 @@ export default {
       this.infoPosition.y = `calc(${-40 * (1 - (this.items.indexOf(item) / this.items.length))}vh + ${mouseY}px)`
       this.displayItemInfo = true
     },
-    scroll (e) {
+    scrollHozizontal (e) {
       const bars = document.getElementById('bars')
       const maxWidth = document.getElementById(`${this.items[0].entity}`).offsetWidth
       this.scrollBars -= e.deltaX + e.deltaY
       // the scroll is contain in [ -maxWidth , 0 ]
       this.scrollBars = Math.min(0, Math.max(-maxWidth, this.scrollBars))
       bars.style.transform = `translate3d(${this.scrollBars}px,0,0)`
+    },
+    touchStartHandler (e) {
+      this.pos.x = e.touches[0].clientX
+      document.addEventListener('touchmove', this.touchMoveHandler)
+      document.addEventListener('touchend', this.touchEndHandler)
+    },
+    touchMoveHandler (e) {
+      const dx = e.touches[0].clientX - this.pos.x
+      // Scroll the element
+      this.scrollBy(dx)
+      // resset the position of the finger
+      this.pos.x = e.touches[0].clientX
+    },
+    touchEndHandler (e) {
+      document.removeEventListener('touchmove', this.touchMoveHandler)
+      document.removeEventListener('touchend', this.touchEndHandler)
+    },
+    scrollBy (dx) {
+      this.scrollBars += dx
+      const bars = document.getElementById('bars')
+      const maxWidth = document.getElementById(`${this.items[0].entity}`).offsetWidth
+      // the scroll is contain in [ -maxHeight , 0 ]
+      this.scrollBars = Math.min(0, Math.max(-maxWidth, this.scrollBars))
+      bars.style.transform = `translate3d(${this.scrollBars}px,0,0)`
     }
+
   }
 }
 </script>
