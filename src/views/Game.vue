@@ -22,6 +22,9 @@ export default {
       gameFinished: false
     }
   },
+  // beforeRouteLeave (to, from, next) {
+  //   // this.transitionOut()
+  // },
   methods: {
     finishGame (score, turn) {
       this.score = score
@@ -39,12 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .game{
-  position:absolute;
-  left: 53.5vw;
-  top: 55vh;
-  width: 93vw;
-  height: 90vh;
-  transform: translate(-50%,-50%);
+
 }
 .mode-fade-enter-active, .mode-fade-leave-active {
   transition: opacity .5s ease

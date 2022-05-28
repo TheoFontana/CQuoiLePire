@@ -1,63 +1,72 @@
 <template>
-  <div  class="about">
-    <div id="items" class="items">
-      <div class="items-row">
-        <div class="text-item">
-          <h2>Pourquoi ce projet ?</h2>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
-            fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
-            sequi optio natus similique. Alias at culpa amet inventore provident quia
-            qui perferendis.
-          </p>
+  <transition appear @after-enter="transitionIn">
+  <div class="about" >
+      <div id="items" class="items" ref="scrollSections" >
+        <div class="items-row"  data-scroll-section>
+          <div class="text-item" data-scroll data-scroll-speed="1" >
+            <h2>Pourquoi ce projet ?</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
+              fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
+              sequi optio natus similique. Alias at culpa amet inventore provident quia
+              qui perferendis.
+            </p>
+          </div>
+          <img class="img-item" :src="require('@/assets/about/healthy.png')"
+            data-scroll data-scroll-speed="2"
+            >
         </div>
-        <img class="img-item" :src="require('@/assets/about/healthy.png')" alt="">
-      </div>
-      <div class="items-row">
-        <div class="text-item">
-          <h2>Pourquoi ce projet ?</h2>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
-            fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
-            sequi optio natus similique. Alias at culpa amet inventore provident quia
-            qui perferendis.
-          </p>
+        <div class="items-row" data-scroll-section >
+          <div class="text-item" data-scroll data-scroll-speed="1">
+            <h2>Pourquoi ce projet ?</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
+              fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
+              sequi optio natus similique. Alias at culpa amet inventore provident quia
+              qui perferendis.
+            </p>
+          </div>
+          <img class="img-item" :src="require('@/assets/about/chikens.png')" alt=""
+            data-scroll data-scroll-speed="2">
         </div>
-        <img class="img-item" :src="require('@/assets/about/chikens.png')" alt="">
-      </div>
-      <div class="items-row">
-        <div class="text-item">
-          <h2>Pourquoi ce projet ?</h2>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
-            fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
-            sequi optio natus similique. Alias at culpa amet inventore provident quia
-            qui perferendis.
-          </p>
+        <div class="items-row" data-scroll-section>
+          <div class="text-item" data-scroll data-scroll-speed="1">
+            <h2>Pourquoi ce projet ?</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
+              fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
+              sequi optio natus similique. Alias at culpa amet inventore provident quia
+              qui perferendis.
+            </p>
+          </div>
+          <img class="img-item" :src="require('@/assets/about/healthy.png')" alt=""
+            data-scroll data-scroll-speed="2">
         </div>
-        <img class="img-item" :src="require('@/assets/about/healthy.png')" alt="">
-      </div>
-      <div class="items-row">
-        <div class="text-item">
-          <h2>Pourquoi ce projet ?</h2>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
-            fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
-            sequi optio natus similique. Alias at culpa amet inventore provident quia
-            qui perferendis.
-          </p>
+        <div class="items-row" data-scroll-section>
+          <div class="text-item" data-scroll data-scroll-speed="1">
+            <h2>Pourquoi ce projet ?</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
+              fuga dolores reiciendis, commodi possimus accusamus, impedit, consequuntur
+              sequi optio natus similique. Alias at culpa amet inventore provident quia
+              qui perferendis.
+            </p>
+          </div>
+          <img class="img-item" :src="require('@/assets/about/healthy.png')" alt=""
+            data-scroll data-scroll-speed="2">
         </div>
-        <img class="img-item" :src="require('@/assets/about/healthy.png')" alt="">
       </div>
     </div>
-  </div>
+  </transition>
+
 </template>
 
 <style lang="scss" scoped>
 .about{
   color:var(--dark-color);
-  margin-top: 10vh;
-  margin-left: calc(7vw + 5px);
   position: relative;
 }
 .items{
-  margin: 5vw 5vw;
+  height: 93vh;
+  margin: 0;
+  overflow: auto;
+  padding: 5vw 5vw;
   display: flex;
   flex-direction: column;
   .items-row{
@@ -84,23 +93,33 @@
       }
     }
     .text-item{
+      transform-origin: bottom right;
+      // transform: scaleY(1);
+      // opacity: 0;
+      // transition: .5s;
       padding: 2%;
       width: 30%;
-      background: var(--light-color);
+      background-color: rgba(255, 255, 255,0.7);
+      backdrop-filter: blur(10px);
+      box-shadow: 10px 10px 30px rgba(0, 0, 0, .5);
       border-radius: 10px;
-      border: solid 2px;
       h2{
       padding-bottom: 5%;
     }
     }
     .img-item{
-      background: var(--light-color);
+      transform-origin: top right;
+      // transition: .5s;
+      // transform: scaleY(0);
+      // opacity: 0;
+      background-color: rgba(255, 255, 255,0.7);
+      backdrop-filter: blur(10px);
+      box-shadow: 10px 10px 30px rgba(0, 0, 0, .5);
       width: 30%;
       aspect-ratio: 1/1;
       object-fit: cover;
       padding: 2%;
       border-radius: 10px;
-      border: solid 2px;
     }
   }
 }
@@ -109,7 +128,6 @@
     margin-left: 0;
   }
   .items{
-    margin: 5vh 10vw;
     .items-row{
       .text-item{
         width: 40%;
@@ -162,83 +180,33 @@
 </style>
 
 <script>
+import Scrollbar from 'smooth-scrollbar'
+
+import { gsap } from 'gsap'
+
 export default {
   name: 'About',
   data () {
     return {
-      scrollBars: 0,
-      pos: {
-        x: 0,
-        y: 0
-      }
+      scroll: null
     }
   },
+  beforeRouteLeave (to, from, next) {
+    this.transitionOut()
+    setTimeout(next, 750)
+  },
   methods: {
-    animateItems (e) {
-      const texts = document.getElementsByClassName('text-item')
-      const imgs = document.getElementsByClassName('img-item')
-
-      const x = 2 * (e.clientX / window.innerWidth - 0.5)
-      const y = -2 * (e.clientY / window.innerHeight - 0.5)
-      texts.forEach((element, index) => {
-        const el = element
-        if (index % 2 === 0) {
-          el.style.transform = `translate3d(${x * 20}px,${y * 15}px,0)`
-        } else {
-          el.style.transform = `translate3d(${-x * 25}px,${-y * 10}px,0)`
-        }
-      })
-      imgs.forEach((element, index) => {
-        const el = element
-        if (index % 2 === 0) {
-          el.style.transform = `translate3d(${-x * 15}px,${-y * 20}px,0)`
-        } else {
-          el.style.transform = `translate3d(${x * 25}px,${y * 15}px,0)`
-        }
-      })
+    transitionIn () {
+      gsap.from('.text-item', { opacity: 0, scaleY: 0, duration: 0.75, stagger: 0.03, ease: 'power3.out' })
+      gsap.from('.img-item', { opacity: 0, scaleY: 0, duration: 0.75, stagger: 0.03, ease: 'power3.out' })
     },
-    scroll (e) {
-      const items = document.getElementById('items')
-      const maxHeight = items.offsetHeight - window.innerHeight / 2
-      this.scrollBars -= e.deltaX + e.deltaY
-      // the scroll is contain in [ -maxHeight , 0 ]
-      this.scrollBars = Math.max(-maxHeight, Math.min(0, this.scrollBars))
-      items.style.transform = `translate3d(0,${this.scrollBars}px,0)`
-    },
-    touchStartHandler (e) {
-      this.pos.y = e.touches[0].clientY
-      document.addEventListener('touchmove', this.touchMoveHandler)
-      document.addEventListener('touchend', this.touchEndHandler)
-    },
-    touchMoveHandler (e) {
-      const dy = e.touches[0].clientY - this.pos.y
-      // Scroll the element
-      this.scrollBy(dy)
-      // resset the position of the finger
-      this.pos.y = e.touches[0].clientY
-    },
-    touchEndHandler (e) {
-      document.removeEventListener('touchmove', this.touchMoveHandler)
-      document.removeEventListener('touchend', this.touchEndHandler)
-    },
-    scrollBy (dy) {
-      this.scrollBars += dy
-      const items = document.getElementById('items')
-      const maxHeight = items.offsetHeight - window.innerHeight / 2
-      // the scroll is contain in [ -maxHeight , 0 ]
-      this.scrollBars = Math.max(-maxHeight, Math.min(0, this.scrollBars))
-      items.style.transform = `translate3d(0,${this.scrollBars}px,0)`
+    transitionOut () {
+      gsap.to('.text-item', { opacity: 0, scaleY: 0, duration: 0.75, stagger: 0.03, ease: 'power3.in' })
+      gsap.to('.img-item', { opacity: 0, scaleY: 0, duration: 0.75, stagger: 0.03, ease: 'power3.in' })
     }
   },
   mounted () {
-    document.addEventListener('mousemove', this.animateItems)
-    document.addEventListener('wheel', this.scroll)
-    document.addEventListener('touchstart', this.touchStartHandler)
-  },
-  unmounted () {
-    document.removeEventListener('mousemove', this.animateItems)
-    document.removeEventListener('wheel', this.scroll)
-    document.removeEventListener('touchstart', this.touchStartHandler)
+    Scrollbar.init(document.querySelector('#items'), { damping: 0.05 })
   }
 }
 </script>

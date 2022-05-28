@@ -1,28 +1,33 @@
 <template>
   <div class="bolbs">
+      <div class="rotate">
+        <svg
+          class="bolb"
+          id="bolb_1"
+          width="534"
+          height="503"
+          viewBox="0 0 534 503"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            class="path"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M243.463 0.846417C298.93 1.56627 353.931 7.36573 402.371
+            35.8928C455.632 67.2589 512.599 106.823 528.797 168.883C544.827
+            230.301 517.353 296.063 484.163 349.273C456.2 394.103 404.766
+            410.093 361.138 437.673C322.363 462.185 288.492 497.304 243.463
+            501.435C196.145 505.777 145.391 494.06 109.919 460.723C75.7704
+            428.63 78.099 374.014 60.4911 329.476C40.6213 279.217 -3.61482 237.634
+            0.25156 183.328C4.47914 123.949 35.7054 66.2329 81.6896 31.7309C127.473
+            -2.62073 187.293 0.117437 243.463 0.846417Z"
+            fill="#00cc99"
+          />
+        </svg>
+      </div>
       <svg
-        id="bolb_1"
-        width="534"
-        height="503"
-        viewBox="0 0 534 503"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M243.463 0.846417C298.93 1.56627 353.931 7.36573 402.371
-          35.8928C455.632 67.2589 512.599 106.823 528.797 168.883C544.827
-          230.301 517.353 296.063 484.163 349.273C456.2 394.103 404.766
-          410.093 361.138 437.673C322.363 462.185 288.492 497.304 243.463
-          501.435C196.145 505.777 145.391 494.06 109.919 460.723C75.7704
-          428.63 78.099 374.014 60.4911 329.476C40.6213 279.217 -3.61482 237.634
-          0.25156 183.328C4.47914 123.949 35.7054 66.2329 81.6896 31.7309C127.473
-          -2.62073 187.293 0.117437 243.463 0.846417Z"
-          fill="#00cc99"
-        />
-      </svg>
-      <svg
+      class="bolb"
         id="bolb_2"
         width="409"
         height="446"
@@ -31,6 +36,7 @@
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
+          class="path"
           fill-rule="evenodd"
           clip-rule="evenodd"
           d="M190.407 0.344586C239.544 3.59743 274.622 45.2732 312.958
@@ -45,6 +51,7 @@
         />
       </svg>
       <svg
+        class="bolb"
         id="bolb_3"
         width="539"
         height="485"
@@ -53,6 +60,7 @@
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
+          class="path"
           fill-rule="evenodd"
           clip-rule="evenodd"
           d="M267.266 4.38211C317.857 11.295 358.61 41.8924 402.446
@@ -67,14 +75,9 @@
         />
       </svg>
   </div>
-  <CustomCursor :targets="['a', 'cta-main', 'cta-sec', 'card','clickable']"/>
+  <CustomCursor :targets="['a', 'svg', 'cta-main', 'cta-sec', 'card','clickable','thumbnail']"/>
   <Nav/>
-  <div class="main">
-    <Left/>
-    <transition name="fade" mode="out-in">
-      <router-view id="view"></router-view>
-    </transition>
-  </div>
+  <router-view id="main"></router-view>
 </template>
 
 <style lang="scss">
@@ -90,38 +93,46 @@
   --dark-color: #0f1020;
   // --light-color: yellow;
   --light-color: #ecf8f8;
+    cursor: none;
+}
+html{
+    cursor: none;
 }
 body{
   color:var(--light-color);
-  overflow-y: hidden;
-  overflow-x: hidden;
-  background: var(--dark-color);
-  // background: linear-gradient(111.54deg, #d0efbf 0%, #fdfffc 100%);
+  background: var(--light-color);
   background-attachment: fixed;
-  // background: linear-gradient(135deg, #F8FDF3 0%, #FFFFFF 100%);
-}
-#app{
-  min-height: 100vh;
-  position: relative;
-  .main{
-    display: flex;
-    position:absolute
-  }
+  cursor: none;
+  overflow-y: hidden;
 
 }
-#view{
-  flex-grow: 1;
-  position: relative;
+#app{
+  // position: relative;
+  width: fit-content;
+  .main{
+    display: flex;
+    position:absolute;
+  }
+  animation: firstFade 500ms ease-out;
 }
-.clickable{
-  cursor:pointer;
+@keyframes firstFade {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
+
 .bolbs {
   width: 100vw;
   height: 100vh;
   position: fixed;
   z-index: -1;
   overflow: hidden;
+  .bolb{
+    transition: 0.2s ease;
+  }
   svg {
     position: absolute;
     width: 40vw;
@@ -129,18 +140,19 @@ body{
   #bolb_1 {
     left: 2%;
     top: 5%;
-    animation: rotate 20s linear infinite;
+    // animation: rotate 20s linear infinite;
   }
   #bolb_2 {
     left: 20%;
     top: 60%;
-    animation: rotate3d 20s linear infinite;
+    // animation: rotate3d 20s linear infinite;
   }
   #bolb_3 {
     left: 65%;
     top: 25%;
-    animation: squeeze 5s linear infinite;
+    // animation: squeeze 5s linear infinite;
   }
+}
   @keyframes rotate {
     from {
       transform: rotate(0turn);
@@ -177,34 +189,46 @@ body{
       transform: scale(0.9, 1.1);
     }
   }
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition-duration: 0.3s;
-  transition-property: opacity;
-  transition-timing-function: ease;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s ease-out
 }
 
-.fade-enter,
-.fade-leave-active {
+.fade-enter-from, .fade-leave-to {
   opacity: 0
 }
 </style>
 
 <script>
+
 import Nav from '@/components/Nav.vue'
-import Left from '@/components/Left.vue'
+// import Left from '@/components/Left.vue'
 import CustomCursor from '@/components/CustomCursor.vue'
 
 export default ({
   components: {
     Nav,
-    Left,
+    // Left,
     CustomCursor
   },
   data () {
     return {
       hover: false
+    }
+  },
+  mounted () {
+    document.addEventListener('mousemove', this.animateBolbs)
+  },
+  methods: {
+    animateBolbs (e) {
+      const bolb1 = document.getElementById('bolb_1')
+      const bolb2 = document.getElementById('bolb_2')
+      const bolb3 = document.getElementById('bolb_3')
+      const x = 2 * (e.clientX / window.innerWidth - 0.5)
+      const y = -2 * (e.clientY / window.innerHeight - 0.5)
+
+      bolb1.style.transform = `translate3d(${-x * 40}px,${-y * 34}px,0)`
+      bolb2.style.transform = `translate3d(${x * 30}px,${-y * 15}px,0)`
+      bolb3.style.transform = `translate3d(${-x * 22}px,${y * 40}px,0)`
     }
   }
 })

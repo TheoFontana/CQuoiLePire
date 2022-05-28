@@ -1,151 +1,166 @@
 <template>
-  <div class="data">
-    <transition appear @enter="transitionIn"  @leave="transitionOut">
-    <div class="graph">
-      <div class="items">
-        <div class="labels">
-          <p v-for="item in items" :key="item.entity" class="label">{{item.entity}}</p>
-          <p>kCO2eq</p>
-        </div>
-        <div id="bars" class="graph-bars">
-          <div
-            @mouseenter="displayInfo(item,$event)"
-            @mouseleave="displayItemInfo = false "
-            v-for="(item,index) in items"
-            :id="item.entity"
-            :key="item.entity" class="graph-bar"
-            :style="{
-              width:'calc(' + item.emissions*scaleRatio + 'vw)',
-              backgroundColor: 'rgb('+ gradientColor(index/items.length).join()+')'
+  <transition appear @enter="transitionIn"  @beforeLeave="transitionOut">
+    <div class="data" ref="scrollSections">
+      <div class="graph" data-scroll-section>
+        <div class="items" data-scroll data-scroll-speed="2">
+          <div class="labels">
+            <p v-for="item in items" :key="item.entity" class="label">{{item.entity}}</p>
+            <p>kCO2eq</p>
+          </div>
+          <div id="bars" class="graph-bars" >
+            <div
+              @mousemove="displayInfo(item,$event)"
+              @mousover="displayInfo(item,$event)"
+              @mouseleave="displayItemInfo = false "
+              @wheel="displayInfo(item,$event)"
+              v-for="(item,index) in items"
+              :id="item.entity"
+              :key="item.entity" class="graph-bar"
+              :style="{
+                width:'calc(' + item.emissions*scaleRatio + 'vw)',
+                backgroundColor: 'rgb('+ gradientColor(index/items.length).join()+')'
               }"
-          >
-          </div>
-          <div class="scale">
-            <p v-for="k in 37"
-            :key="k"
-            :style="{marginLeft:''+ scaleRatio+'vw' ,width:0}"
             >
-              {{k}}
-            </p>
+            </div>
+            <div class="scale">
+              <p
+                v-for="k in 37"
+                :key="k"
+                :style="{marginLeft:''+ scaleRatio+'vw' ,width:0}"
+              >
+                {{k}}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    </transition>
-    <transition name="fadefast">
-    <div
-      v-show="displayItemInfo"
-      :key="focusedItem.entity"
-      class="item-info-container"
-      :style="{transform:`translate3d(${infoPosition.x},${infoPosition.y},0px)`}"
-    >
-      <div class="item-info">
-        <img
-        :src="require('@/assets/food/' + focusedItem.entity + '.jpg')"
-        alt="food item"
-        />
-        <div class="item-info-label">
-        <p class="item-name"> {{focusedItem.entity}}</p>
-        <p class="item-emissions"> {{focusedItem.emissions}} kCO2eq/kcal</p>
+      <p class="scroll-indicator">Scroll</p>
+      <transition name="fadefast">
+        <div
+          v-show="displayItemInfo"
+          :key="focusedItem.entity"
+          class="item-info-container"
+          :style="{transform:`translate3d(${infoPosition.x},${infoPosition.y},0px)`}"
+        >
+          <div class="item-info">
+            <img
+              :src="require('@/assets/food/' + focusedItem.entity + '.jpg')"
+              alt="food item"
+            />
+            <div class="item-info-label">
+            <p class="item-name"> {{focusedItem.entity}}</p>
+            <p class="item-emissions"> {{focusedItem.emissions}} kCO2eq/kcal</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </transition>
     </div>
-    </transition>
-  </div>
+  </transition>
 </template>
 
 <style lang="scss">
-.data{
-  margin-top: 10vh;
-  margin-left:7vw;
-}
-.items{
-  display: flex;
-  z-index: 3;
-  .graph-bars{
+  .data{
+    margin-top: 5vh;
+  }
+  .items{
+    margin-left: 4vw;
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-between;
-    .graph-bar{
-      height: 2.6vh;
-      border-radius: 100px;
-      border:solid 2px var(--dark-color);
-      opacity:0;
-    }
-    .scale{
-      height: 2.5vh;
+    z-index: 3;
+    .graph-bars{
+      // width: 100vw;
       display: flex;
-      color: var(--light-color);
-      p{
-        border-left: solid 2px;
-        padding-left: 1vw;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+      .graph-bar{
+        height: 2.6vh;
+        border-radius: 100px;
+        border:solid 2px var(--dark-color);
+        opacity:1;
+      }
+      .scale{
+        height: 2.5vh;
+        display: flex;
+        color: var(--dark-color);
+        p{
+          border-left: solid 2px;
+          padding-left: 1vw;
 
+        }
+      }
+    }
+    .labels{
+      color:var(--dark-color);
+      z-index: 5;
+      left: 0;
+      position: sticky;
+      padding: 0 1vw;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+      font-size: 2vh;
+      .label{
+        white-space: nowrap;
+        opacity:1;
       }
     }
   }
-  .labels{
-    color:var(--light-color);
-    z-index: 5;
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -o-sticky;
-    position: -ms-sticky;
-    position: sticky;
-    left: 7vw;
-    padding: 0 1vw;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-between;
-    font-size: 2vh;
-    .label{
-      white-space: nowrap;
-      opacity:0;
-    }
-  }
-}
-.item-info-container{
-  position:absolute;
-  top:0;
-  left:0;
-  transition: transform .1s ease;
-  .item-info{
-    color:#fff;
-    height: 35vh;
-    width: 60vh;
-    display: flex;
-    flex-direction: column;
-    img{
-      opacity: .7;
-      z-index: -1;
-      border-radius: 10px;
-      aspect-ratio: 3 / 2;
-      object-fit: cover;
-      background:rgba(0,0,0,0.6);
-    };
-    .item-info-label{
-      position: absolute;
-    }
-    .item-name{
-      font-size:4vw;
-      font-weight: 800;
-    }
-    .item-emissions{
-      font-size:3vw;
-      font-weight: 600;
-    }
-  }
-}
-  @media only screen and (max-width : 768px) {
-    .items{
-      font-size: .8em;
-      .labels{
-        left :0;
+  .item-info-container{
+    position:absolute;
+    top:0;
+    left:0;
+    .item-info{
+      color:#fff;
+      height: 35vh;
+      width: 60vh;
+      display: flex;
+      flex-direction: column;
+      img{
+        opacity: .7;
+        z-index: -1;
+        border-radius: 10px;
+        aspect-ratio: 3 / 2;
+        object-fit: cover;
+        background:rgba(0,0,0,0.6);
+      };
+      .item-info-label{
+        position: absolute;
+      }
+      .item-name{
+        font-size:4vw;
+        font-weight: 800;
+      }
+      .item-emissions{
+        font-size:3vw;
+        font-weight: 600;
       }
     }
   }
+  .scroll-indicator{
+    color:var(--dark-color);
+    font-size: 1.5em;
+    position:absolute;
+    z-index:2;
+    left:50vw;
+    // bottom: 1%;
+    transform: translateX(-50%);
+  }
+
+    @media only screen and (max-width : 768px) {
+      .data {
+        margin-left:1vw;
+      }
+      .items{
+        font-size: .8em;
+        .labels{
+          left :0;
+        }
+      }
+    }
 </style>
+
 <script>
-import KUTE from 'kute.js'
+import { gsap } from 'gsap'
+// import Scrollbar from 'smooth-scrollbar'
 import data from '@/data/data.json'
 
 export default {
@@ -168,78 +183,46 @@ export default {
     }
   },
   mounted () {
-    document.addEventListener('wheel', this.scrollHozizontal)
-    document.addEventListener('touchstart', this.touchStartHandler)
-    // document.addEventListener('wheel', (e) => {
-    //   if (e.target.className !== 'graph-bar') {
-    //     this.displayInfo = false
-    //   } else {
-    //     this.displayInfo = true
+    document.addEventListener('wheel', (e) => {
+      // vertical scroll does horizontal scroll
+      window.scrollBy(-0.5 * e.wheelDeltaY, 0)
+    })
+    // class HorizontalScrollPlugin extends Scrollbar.ScrollbarPlugin {
+    //   static pluginName = 'horizontalScroll'
+    //   transformDelta (delta, fromEvent) {
+    //     if (!/wheel/.test(fromEvent.type)) {
+    //       return delta
+    //     }
+    //     const { x, y } = delta
+    //     return {
+    //       y: 0,
+    //       x: Math.abs(x) > Math.abs(y) ? x : y
+    //     }
     //   }
-    // })
+    // }
+    // const scrollbar = document.querySelector('#bars')
+    // Scrollbar.use(HorizontalScrollPlugin)
+    // const myHorizontalScrollbar = Scrollbar.init(scrollbar)
+    // myHorizontalScrollbar.setPosition(0, 0)
   },
   unmounted () {
-    document.removeEventListener('wheel', this.scrollHozizontal)
-    document.removeEventListener('touchstart', this.touchStartHandler)
+    document.removeEventListener('wheel', (e) => {
+      // vertical scroll does horizontal scroll
+      window.scrollBy(-0.5 * e.wheelDeltaY, 0)
+    })
+  },
+  beforeRouteLeave (to, from, next) {
+    this.transitionOut()
+    setTimeout(next, 1500)
   },
   methods: {
     transitionIn () {
-      const labels = document.querySelectorAll('.label')
-      const bars = document.querySelectorAll('.graph-bar')
-      KUTE.allFromTo(
-        labels,
-        {
-          translateX: window.innerWidth,
-          opacity: 1
-        },
-        {
-          translateX: 0,
-          opacity: 1
-
-        },
-        { offset: 50, duration: 500, easing: 'easingCubicOut' }
-      ).start()
-      KUTE.allFromTo(
-        bars,
-        {
-          translateX: window.innerWidth,
-          opacity: 1
-        },
-        {
-          translateX: 0,
-          opacity: 1
-        },
-        { offset: 50, duration: 500, easing: 'easingCubicOut' }
-      ).start()
+      gsap.from('.label', { opacity: 0, x: window.innerWidth, duration: 0.75, stagger: 0.03, ease: 'power3.out' })
+      gsap.from('.graph-bar', { opacity: 0, x: window.innerWidth, duration: 0.75, stagger: 0.03, ease: 'power3.out' })
     },
     transitionOut () {
-      const labels = document.querySelectorAll('.label')
-      const bars = document.querySelectorAll('.graph-bar')
-      // console.log('out')
-      KUTE.allFromTo(
-        labels,
-        {
-          translateX: 0,
-          opacity: 1
-        },
-        {
-          translateX: window.innerWidth,
-          opacity: 1
-        },
-        { offset: 50, duration: 500, easing: 'easingCubicOut' }
-      ).start()
-      KUTE.allFromTo(
-        bars,
-        {
-          translateX: 0,
-          opacity: 1
-        },
-        {
-          translateX: window.innerWidth,
-          opacity: 1
-        },
-        { offset: 50, duration: 500, easing: 'easingCubicOut' }
-      ).start()
+      gsap.to('.label', { opacity: 0, y: window.innerHeight, duration: 0.75, stagger: 0.03, ease: 'power3.in' })
+      gsap.to('.graph-bar', { opacity: 0, y: window.innerHeight, duration: 0.75, stagger: 0.03, ease: 'power3.in' })
     },
     gradientColor (weight) {
       const color1 = [166, 240, 141]
@@ -255,46 +238,13 @@ export default {
       return rgb
     },
     displayInfo (item, e) {
-      const mouseX = e.clientX
+      const mouseX = e.offsetX
       const mouseY = e.clientY
       this.focusedItem = item
-      this.infoPosition.x = `calc(${mouseX}px)`
-      this.infoPosition.y = `calc(${-40 * (1 - (this.items.indexOf(item) / this.items.length))}vh + ${mouseY}px)`
+      this.infoPosition.x = `calc(${mouseX}px + 75%)`
+      this.infoPosition.y = `calc(${-40 * (1 - ((this.items.indexOf(item)) / this.items.length))}vh + ${mouseY}px - 25%)`
       this.displayItemInfo = true
-    },
-    scrollHozizontal (e) {
-      const bars = document.getElementById('bars')
-      const maxWidth = document.getElementById(`${this.items[0].entity}`).offsetWidth
-      this.scrollBars -= e.deltaX + e.deltaY
-      // the scroll is contain in [ -maxWidth , 0 ]
-      this.scrollBars = Math.min(0, Math.max(-maxWidth, this.scrollBars))
-      bars.style.transform = `translate3d(${this.scrollBars}px,0,0)`
-    },
-    touchStartHandler (e) {
-      this.pos.x = e.touches[0].clientX
-      document.addEventListener('touchmove', this.touchMoveHandler)
-      document.addEventListener('touchend', this.touchEndHandler)
-    },
-    touchMoveHandler (e) {
-      const dx = e.touches[0].clientX - this.pos.x
-      // Scroll the element
-      this.scrollBy(dx)
-      // resset the position of the finger
-      this.pos.x = e.touches[0].clientX
-    },
-    touchEndHandler (e) {
-      document.removeEventListener('touchmove', this.touchMoveHandler)
-      document.removeEventListener('touchend', this.touchEndHandler)
-    },
-    scrollBy (dx) {
-      this.scrollBars += dx
-      const bars = document.getElementById('bars')
-      const maxWidth = document.getElementById(`${this.items[0].entity}`).offsetWidth
-      // the scroll is contain in [ -maxHeight , 0 ]
-      this.scrollBars = Math.min(0, Math.max(-maxWidth, this.scrollBars))
-      bars.style.transform = `translate3d(${this.scrollBars}px,0,0)`
     }
-
   }
 }
 </script>

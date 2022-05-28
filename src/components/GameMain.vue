@@ -1,7 +1,7 @@
 <template>
   <div class="game-main">
       <div class="gameCard">
-        <transition name="slide" mode="out-in">
+        <transition appear name="slide" mode="out-in">
           <Card
             id='leftCard'
             :key="items[turn].entity"
@@ -16,7 +16,7 @@
         </transition>
       </div>
 
-        <transition class="game-nav" name="slide" mode="out-in">
+        <transition  appear class="game-nav" name="slide" mode="out-in">
           <p v-if="!askContinue" key='indicator' class="indacator" :class="classIndicator">
             {{indicator}}
           </p>
@@ -31,7 +31,7 @@
         </transition>
 
       <div class="gameCard">
-        <transition name="slide" mode="out-in">
+        <transition appear name="slide" mode="out-in">
           <Card
             id='rightCard'
             :key="items[turn+1].entity"
@@ -81,7 +81,7 @@ export default {
         this.showResult = true
         // the looser is the item with le least emmission
         let looser = null
-        let winner = null
+        // let winner = null
         // ratio is used to find the looser and scale it
         let ratio = this.items[this.turn].emissions / this.items[this.turn + 1].emissions
         // find looser and update the score
@@ -90,19 +90,15 @@ export default {
           this.indicator = '🥳'
           if (isLeftSelected) {
             looser = document.getElementById('rightCard')
-            winner = document.getElementById('leftCard')
           } else {
             looser = document.getElementById('leftCard')
-            winner = document.getElementById('rightCard')
           }
         } else {
           this.indicator = '😥'
           if (isLeftSelected) {
             looser = document.getElementById('leftCard')
-            winner = document.getElementById('rightCard')
           } else {
             looser = document.getElementById('rightCard')
-            winner = document.getElementById('leftCard')
           }
         }
         // sacle down the looser in proportion to is emmisson
@@ -111,8 +107,6 @@ export default {
         }
         looser.style.transform += `scale(${ratio})`
         looser.style.transition = '.5s'
-        looser.style.backgroundColor = 'var(--light-color)'
-        winner.style.backgroundColor = 'var(--light-color)'
         setTimeout(() => {
           this.askContinue = true
           this.showindicator = false
@@ -123,7 +117,8 @@ export default {
       this.showindicator = true
       this.classIndicator.pointright = false
       this.classIndicator.pointleft = false
-      if (this.turn > 15) {
+      // max nuber of turn is 15
+      if (this.turn > 16) {
         this.$parent.$parent.finishGame(this.score, this.turn)
       } else {
         this.turn += 2
@@ -174,6 +169,10 @@ export default {
 <style lang="scss" scoped >
 
 .game-main{
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%,-50%);
   display: flex;
   gap: 10vw;
   flex-direction: row;
@@ -189,7 +188,7 @@ export default {
   transition:.5s;
 }
   .indacator{
-    color:var(--light-color);
+    color:var(--dark-color);
     font-size: 8em;
     font-weight: 800;
     transition: .5s ease-in-out;
@@ -199,6 +198,7 @@ export default {
   flex-direction: column;
   align-items: center;
   .card-value{
+    color:var(--dark-color);
     margin-top: 3vh;
     font-weight: 700;
     span{
@@ -216,6 +216,7 @@ export default {
     border-radius:10px;
   }
   .cta-sec{
+    color:var(--dark-color);
     margin-top:3vh;
     white-space:nowrap;
     font-size: 1.3em;
@@ -261,7 +262,7 @@ export default {
 @media only screen and (max-width : 768px) {
   .game-main{
     font-size: .8em;
-    gap:unset;
+    gap:3vh;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;

@@ -10,15 +10,21 @@
         >
         <router-link
           v-else to="/"
-          class="clickable title">
-          CQuoiLePire
+          class="title">
+          <span><span class="clickable">CQuoiLePire</span></span>
         </router-link>
     </transition>
     <transition name="slide-right" class="pages" mode="out-in">
         <div v-if="showNav" class="links">
-          <router-link id="data" to="/data">Donnée</router-link>
-          <router-link id="game" to="/game">Jeux</router-link>
-          <router-link id="about" to="/about">A propos</router-link>
+          <router-link id="data" to="/data">
+            <span><span class="clickable">Donnée</span></span>
+          </router-link>
+          <router-link id="game" to="/game">
+            <span><span class="clickable">Jeux</span></span>
+          </router-link>
+          <router-link id="about" to="/about">
+            <span><span class="clickable"> A propos</span></span>
+          </router-link>
         </div>
         <div @click="updateMenu(true)" v-else class="hamburger links clickable">
           <img
@@ -72,20 +78,21 @@ export default {
 <style lang="scss">
   .nav{
     z-index: 2;
-    position: fixed;
-    -webkit-backface-visibility: hidden;
-    height: 10vh;
-    width: 93vw;
-    border-bottom: solid 5px ;
-    border-left: solid 5px ;
-    margin-left: 7vw;
+    position: sticky;
+    top: 0px;
+    left: 0px;
+    height: 7vh;
+    width: 100vw;
+    // border-bottom: solid 5px ;
+    // border-left: solid 5px ;
+    // margin-left: 7vw;
     padding: 0 5vw ;
+    // padding-top: 2vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color:var(--light-color);
+    color:var(--dark-color);
     .title{
-      mix-blend-mode: difference;
       font-size: 2em;
       font-weight: 800;
     }
@@ -93,11 +100,18 @@ export default {
       height: 3vh;
     }
     a{
-      color: var(--light-color);
+      color: var(--dark-color);
       text-decoration: none;
+      > span{
+        overflow: hidden;
+        display: block;
+        > span {
+          display: block;
+          animation: apearBaseLine .5s ease-out;
+        }
+      }
     }
     .pages{
-      mix-blend-mode: difference;
       display: flex;
       flex-grow: 1;
       justify-content: flex-end;
@@ -110,14 +124,6 @@ export default {
         display: flex;
         justify-content: flex-end;
       }
-    }
-  }
-  @media only screen and (max-width : 768px) {
-    .nav{
-      width: 100vw;
-      margin-left: 0;
-      padding: 0 10vw;
-      border-left:none;
     }
   }
 .slide-left-enter-active,

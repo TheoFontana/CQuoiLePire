@@ -5,7 +5,6 @@
       :src="require('@/assets/food/' + data.entity + '.jpg')"
       alt="café"
     />
-    <p v-if="false" class="result">{{ data.emissions }} kCO2e</p>
     <p class="clickable">{{ data.entity }}</p>
   </div>
 </template>
@@ -14,22 +13,24 @@
     color: var(--dark-color);
     aspect-ratio: 2/3;
     width: 25vw;
-    // max-width: 35vw;
-    border: solid 3px;
+    max-height: 50vh;
     border-radius: 10px;
-    background: var(--light-color);
+    background-color: rgba(255, 255, 255,0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, .5);
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    transition: .3s cubic-bezier(.51,-0.48,.52,1.46);
+    transition: .3s ease-out;
     &:hover {
       transform: scale(1.05);
     }
     img {
       margin: 10%;
-      width: 80%;
+      height: 60%;
+      max-width: 80%;
       border-radius: 10px;
       aspect-ratio: 1 / 1;
       object-fit: cover;
